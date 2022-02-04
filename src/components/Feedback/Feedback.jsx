@@ -1,24 +1,39 @@
 
 import s from "./Feedback.module.css";
 
-// const CounterC = ({ counter }) => <p className={s.count}>{counter}</p>;
+const FeedbackOptions = ({ onLeaveFeedback, options }) => {
+    console.log(options);
+    return(
+        <>
+            <div className={s.container}>
+                {options.map(option => {
+                    return (
+                        <button key={option} name={option} onClick={onLeaveFeedback} className={s.btn} type="button">
+                            {option}
+                        </button>
+                    )
+                })}
+            </div>
+        </>
+    );
+} 
 
-const Feedback = ({handleChange}) => (
-    
+export default FeedbackOptions;
 
-    <>
-        <div className={s.container}>
-            <button id="good" onClick={handleChange} className={s.btn} type="button">
-                Good
-            </button>
-            <button id="neutral" onClick={handleChange} className={s.btn} type="button">
-                Neutral
-            </button>
-            <button id="bad" onClick={handleChange} className={s.btn} type="button">
-                Bad
-                </button>
-        </div>
-    </>
-);
-  
-export default Feedback;
+// const FeedbackOptions = ({ onLeaveFeedback }) => {
+//     return(
+//         <>
+//             <div className={s.container}>
+//                 <button id="good" onClick={onLeaveFeedback} className={s.btn} type="button">
+//                     Good
+//                 </button>
+//                 <button id="neutral" onClick={onLeaveFeedback} className={s.btn} type="button">
+//                     Neutral
+//                 </button>
+//                 <button id="bad" onClick={onLeaveFeedback} className={s.btn} type="button">
+//                     Bad
+//                     </button>
+//             </div>
+//         </>
+//     );
+// } 
