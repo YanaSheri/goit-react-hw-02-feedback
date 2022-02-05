@@ -1,9 +1,8 @@
 import Feedback from './components/Feedback/Feedback';
 import { Component } from 'react';
-import s from './App.css';
+// import s from './App.css';
 import Statistics from "./components/Statistics/Statistics";
 import Section from "./components/Section/Section";
-// import './App.css';
 
 class App extends Component {
   state = {
@@ -37,7 +36,6 @@ class App extends Component {
       : 0;
   };
 
-  
   render() {
     const {
       countTotalFeedback,
