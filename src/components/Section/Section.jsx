@@ -1,7 +1,10 @@
-const Section =({children , title})=>{
-   return <>
-    <h1>{title}</h1>
-    <div>{children?children:null}</div>
-    </>
+const Section = ({title, children}) => {
+    return (
+        <>
+            <h2>{title}</h2>
+            {children}
+        </>
+    )
 }
+
 export default Section;

@@ -1,39 +1,58 @@
+import { Component } from "react";
+import FeedbackOptions from "../FeedbackOptions/FeedbackOptions";
+import Notification from "../Notification/Notification";
+import Section from "../Section/Section";
+import Statistics from "../Statistics/Statistics";
 
-import s from "./Feedback.module.css";
+class Feedback extends Component {
+    state = {
+        good: 0,
+        neutral: 0,
+        bad: 0
+    }
 
-const FeedbackOptions = ({ onLeaveFeedback, options }) => {
-    console.log(options);
-    return(
-        <>
-            <div className={s.container}>
-                {options.map(option => {
-                    return (
-                        <button key={option} name={option} onClick={onLeaveFeedback} className={s.btn} type="button">
-                            {option}
-                        </button>
-                    )
-                })}
-            </div>
-        </>
-    );
-} 
+    countTotalFeedback() {
+        const total = this.state.good + this.state.neutral + this.state.bad;
+        return total;
+    }
+    
+    countPositiveFeedbackPercentage() {
+        const total = this.countTotalFeedback();
+        if (!total) {
+            return 0;
+        }
+        const { good } = this.state;
+        const percent = (good / total) * 100;
+        return percent.toFixed();
+    }
 
-export default FeedbackOptions;
+    onLeaveFeedback = (key) => {
+        this.setState(prevSate => {
+            const value = prevSate[key];
+            return {
+                [key]: value + 1
+            }
+        })
+    }
+    
+    render() {
+        const total = this.countTotalFeedback();
+        const positivePercentage = this.countPositiveFeedbackPercentage();
+        const { good, neutral, bad } = this.state;
+        const options = Object.keys(this.state);
 
-// const FeedbackOptions = ({ onLeaveFeedback }) => {
-//     return(
-//         <>
-//             <div className={s.container}>
-//                 <button id="good" onClick={onLeaveFeedback} className={s.btn} type="button">
-//                     Good
-//                 </button>
-//                 <button id="neutral" onClick={onLeaveFeedback} className={s.btn} type="button">
-//                     Neutral
-//                 </button>
-//                 <button id="bad" onClick={onLeaveFeedback} className={s.btn} type="button">
-//                     Bad
-//                     </button>
-//             </div>
-//         </>
-//     );
-// } 
+        return (
+            <>
+                <Section title="Leave Feedback">
+                    <FeedbackOptions options={options} onLeaveFeedback={ this.onLeaveFeedback }/>
+                </Section>
+                <Section title="Statistics">
+                    {Boolean(total) && <Statistics good={good} neutral={neutral} bad={bad} total={total} positivePercentage={ positivePercentage}/>}
+                    {!total && <Notification message="There is no feedback" />}
+                </Section>
+            </>
+        )
+    }
+}
+
+export default Feedback;
